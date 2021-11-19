@@ -18,4 +18,15 @@ export class ClienteService {
     async getClientes(): Promise<public_Cliente[]> {
         return this.prisma.public_Cliente.findMany();
     }
+
+    async getClienteById(id: number) {
+        return this.prisma.public_Cliente.findUnique({
+            where: {
+              id: Number(id),
+            },
+            select:{
+                nome: true,
+            },
+        });
+    }
 }

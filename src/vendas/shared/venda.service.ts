@@ -18,4 +18,5 @@ export class VendaService {
     async getVendas(): Promise<public_Venda[]> {
         return this.prisma.public_Venda.findMany();
     }
+
 }
