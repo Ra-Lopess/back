@@ -1,26 +1,22 @@
+import { Cliente } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import {
-    public_Cliente,
-    Prisma
-} from '@prisma/client';
-
 @Injectable()
 export class ClienteService {
     constructor(private prisma: PrismaService) { }
 
-    async createCliente(data): Promise<public_Cliente> {
-        return this.prisma.public_Cliente.create({
+    async createCliente(data): Promise<Cliente> {
+        return this.prisma.cliente.create({
             data,
         });
     }
 
-    async getClientes(): Promise<public_Cliente[]> {
-        return this.prisma.public_Cliente.findMany();
+    async getClientes(): Promise<Cliente[]> {
+        return this.prisma.cliente.findMany();
     }
 
     async getClienteById(id: number) {
-        return this.prisma.public_Cliente.findUnique({
+        return this.prisma.cliente.findUnique({
             where: {
               id: Number(id),
             },

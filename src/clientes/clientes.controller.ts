@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { ClienteService } from './shared/cliente.service'
-import { public_Cliente as cliente } from '@prisma/client';
+import { Cliente as cliente } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
 @Controller('clientes')

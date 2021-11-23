@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { ProdutoService } from './shared/produto.service';
-import { public_Produto as produto } from '@prisma/client';
+import { Produto as produto } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 
 

@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 
 import { ItemService } from './shared/item.service';
-import { public_Item as item } from '@prisma/client';
+import { Item as item } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
+import { ItemDTO } from 'src/dto/ItemDTO';
 
 @Controller('itens')
 export class ItensController {
@@ -19,7 +20,7 @@ export class ItensController {
       ) {}
     
       @Get()
-      async getItens() : Promise<item[]>{
+      async getItens() : Promise<ItemDTO[]>{
         return this.itemService.getItens();
       }
     

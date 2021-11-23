@@ -10,8 +10,9 @@ import {
 
 import { VendaService } from './shared/venda.service';
 import { ClienteService } from 'src/clientes/shared/cliente.service';
-import { public_Venda as venda } from '@prisma/client';
+import { Venda as venda } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
+import { VendaDTO } from 'src/dto/VendaDTO';
 
 @Controller('vendas')
 export class VendasController {
@@ -21,7 +22,7 @@ export class VendasController {
     ) { }
 
     @Get()
-    async getVendas(): Promise<venda[]> {
+    async getVendas(): Promise<VendaDTO[]> {
         return this.vendaService.getVendas();
     }
 
@@ -32,13 +33,13 @@ export class VendasController {
 
     @Post('cadastroVenda')
     async cadastroVenda(
-        @Body() userData: { idCliente: number },
+        @Body() userData: { idCliente: number, frete: Decimal },
     ): Promise<venda> {
         const dataCadastro = new Date();
         const venda = {
             "dataCadastro": dataCadastro,
             "idCliente": userData.idCliente,
-            "frete": 10.00,
+            "frete": userData.frete,
             "total": 10.00
         }
         return this.vendaService.createVenda(venda);

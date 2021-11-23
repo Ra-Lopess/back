@@ -7,42 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model public_Cliente {
-  id           Int            @id(map: "Cliente_pk") @default(dbgenerated("nextval('\"public.Cliente_id_seq\"'::regclass)"))
-  nome         String         @db.VarChar(255)
-  public_Venda public_Venda[]
-
-  @@map("public.Cliente")
+model Cliente {
+  id    Int     @id(map: "Cliente_pk") @default(autoincrement())
+  nome  String  @db.VarChar(255)
+  Venda Venda[]
 }
 
-model public_Item {
-  id                                             Int            @id(map: "Item_pk") @default(dbgenerated("nextval('\"public.Item_id_seq\"'::regclass)"))
-  idVenda                                        Int            @default(dbgenerated("nextval('\"public.Item_idVenda_seq\"'::regclass)"))
-  idProduto                                      Int
-  quantidade                                     Int
-  public_Produto                                 public_Produto @relation(fields: [idProduto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Item_fk1")
-  public_Venda_public_Item_idVendaTopublic_Venda public_Venda   @relation("public_Item_idVendaTopublic_Venda", fields: [idVenda], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Item_fk0")
-
-  @@map("public.Item")
+model Item {
+  id         Int     @id(map: "Item_pk") @default(autoincrement())
+  idVenda    Int     @default(autoincrement())
+  idProduto  Int
+  quantidade Int
+  Produto    Produto @relation(fields: [idProduto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Item_fk1")
+  Venda      Venda   @relation(fields: [idVenda], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Item_fk0")
 }
 
-model public_Produto {
-  id          Int           @id(map: "Produto_pk") @default(dbgenerated("nextval('\"public.Produto_id_seq\"'::regclass)"))
-  nome        String        @db.VarChar(255)
-  valor       Decimal       @db.Decimal
-  public_Item public_Item[]
-
-  @@map("public.Produto")
+model Produto {
+  id    Int     @id(map: "Produto_pk") @default(autoincrement())
+  nome  String  @db.VarChar(255)
+  valor Decimal @db.Decimal
+  Item  Item[]
 }
 
-model public_Venda {
-  id                                            Int            @id(map: "Venda_pk") @default(dbgenerated("nextval('\"public.Venda_id_seq\"'::regclass)"))
-  dataCadastro                                  DateTime       @db.Timestamp(6)
-  idCliente                                     Int
-  frete                                         Decimal        @db.Decimal
-  total                                         Decimal        @db.Decimal
-  public_Cliente                                public_Cliente @relation(fields: [idCliente], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Venda_fk0")
-  public_Item_public_Item_idVendaTopublic_Venda public_Item[]  @relation("public_Item_idVendaTopublic_Venda")
-
-  @@map("public.Venda")
+model Venda {
+  id           Int      @id(map: "Venda_pk") @default(autoincrement())
+  dataCadastro DateTime @db.Timestamp(6)
+  idCliente    Int
+  frete        Decimal  @db.Decimal
+  total        Decimal  @db.Decimal
+  Cliente      Cliente  @relation(fields: [idCliente], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Venda_fk0")
+  Item         Item[]
 }
