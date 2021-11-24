@@ -11,8 +11,8 @@ export class VendaService {
     constructor(
         private prisma: PrismaService,
         private clienteService: ClienteService,
-        @Inject(forwardRef(() => ItemService ))
-        private itemService: ItemService
+        //@Inject(forwardRef(() => ItemService ))
+        //private itemService: ItemService
         ) { }
 
     async createVenda(data): Promise<Venda> {
@@ -24,20 +24,20 @@ export class VendaService {
     async getVendas(): Promise<Array<VendaDTO>> {
         const vendas = await this.prisma.venda.findMany();
         let clientes = await this.clienteService.getClientes();
-        let itens = await this.itemService.getItens();
-        let VendaDTO = [];
+        //let itens = await this.itemService.getItens();
+        let vendasDTO = [];
 
-        /*vendas.forEach( venda => {
+        vendas.forEach( venda => {
             
-            let vendaAux = new VendaDTO(venda.id, venda.dataCadastro, null, null, venda.frete, venda.total);
+            let vendaAux = new VendaDTO(venda.id, venda.dataCadastro,  null, venda.frete, venda.total);
 
             vendaAux.cliente = clientes.filter(cliente => cliente.id === venda.idCliente)[0];
-            vendaAux.
+            //vendaAux.item = itens.filter(item => item.id === venda.id)[0];
         
-            VendaDTO.push(vendaAux);
+            vendasDTO.push(vendaAux);
         })
-    */
-        return VendaDTO;
+    
+        return vendasDTO;
     }
     
 

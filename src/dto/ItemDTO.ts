@@ -7,7 +7,7 @@ export class ItemDTO {
     produto: any;
     quantidade: Number;
 
-    constructor(id:Number, venda:any, produto:any, quantidade:number) {
+    constructor(id:Number, venda:any, produto:any, quantidade:Number) {
         this.id = id;
         this.venda = venda
         this.produto = produto
