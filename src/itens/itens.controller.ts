@@ -9,9 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { ItemService } from './shared/item.service';
-import { Item as item } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
-import { ItemDTO } from 'src/dto/ItemDTO';
+import { Item } from '@prisma/client';
 
 @Controller('itens')
 export class ItensController {
@@ -20,14 +18,14 @@ export class ItensController {
       ) {}
     
       @Get()
-      async getItens() : Promise<ItemDTO[]>{
+      async getItens() : Promise<Array<any>>{
         return this.itemService.getItens();
       }
     
       @Post('cadastroItem')
       async cadastroProduto(
         @Body() userData: {idVenda: number; idProduto: number; quantidade: number},
-      ): Promise<item>{
+      ): Promise<Item>{
         return this.itemService.createItem(userData);
       }
 }

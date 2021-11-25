@@ -13,6 +13,7 @@ import { ClienteService } from 'src/clientes/shared/cliente.service';
 import { Venda as venda } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime';
 import { VendaDTO } from 'src/dto/VendaDTO';
+import { ItemDTO } from 'src/dto/ItemDTO';
 
 @Controller('vendas')
 export class VendasController {
@@ -27,21 +28,14 @@ export class VendasController {
     }
 
     @Get(':id')
-    async getClienteById(@Param('id') id: number){
+    async getClienteById(@Param('id') id: number) {
         return this.clienteService.getClienteById(id);
     }
 
     @Post('cadastroVenda')
-    async cadastroVenda(
-        @Body() userData: { idCliente: number, frete: Decimal },
-    ): Promise<venda> {
-        const dataCadastro = new Date();
-        const venda = {
-            "dataCadastro": dataCadastro,
-            "idCliente": userData.idCliente,
-            "frete": userData.frete,
-            "total": 10.00
-        }
+    async cadastroVenda(@Body() venda): Promise<venda> {
+
+        venda.dataCadastro = new Date();
         return this.vendaService.createVenda(venda);
     }
 }
