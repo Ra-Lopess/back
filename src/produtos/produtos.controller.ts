@@ -23,6 +23,11 @@ export class ProdutosController {
       async getProdutos() : Promise<produto[]>{
         return this.produtoService.getProdutos();
       }
+
+      @Get('id')
+      async produtoById(@Param(':id') Id) : Promise<produto>{
+        return this.produtoService.produtoById(Id);
+      }
     
       @Post('cadastroProduto')
       async cadastraProduto(
